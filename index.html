@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#050816" />
+  <title>Football Pulse | Live Scores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="orb orb-one"></div><div class="orb orb-two"></div><div class="orb orb-three"></div>
+
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Football Pulse home"><span class="brand-mark"><span></span></span><span>FOOTBALL <b>PULSE</b></span></a>
+    <nav><a href="#scores">Live Scores</a><a href="#upcoming">Fixtures</a><a href="#competitions">Competitions</a><a href="#news">Breaking News</a></nav>
+    <div class="header-actions"><div class="live-chip"><i></i> LIVE CENTRE</div><button class="menu-btn" aria-label="Open menu">☰</button></div>
+  </header>
+
+  <main id="top">
+    <section class="hero reveal">
+      <div class="hero-copy-wrap">
+        <div class="hero-badge"><span></span> MULTI-SOURCE MATCH DATA</div>
+        <h1>Football,<br><span>at full pulse.</span></h1>
+        <p class="hero-copy">A cinematic live-score centre for the world’s biggest competitions, combining real FotMob scores, trusted football feeds and breaking news in one electric matchday dashboard.</p>
+        <div class="hero-actions"><a class="primary magnetic" href="#scores">Explore live scores <span>↗</span></a><button class="secondary magnetic" id="refreshBtn">↻ Refresh now</button></div>
+        <div class="hero-meta"><div><strong>5</strong><span>score providers</span></div><div><strong>60s</strong><span>auto refresh</span></div><div><strong>24/7</strong><span>match centre</span></div></div>
+      </div>
+
+      <div class="hero-visual" aria-hidden="true">
+        <div class="stadium-card tilt-card">
+          <div class="stadium-grid"></div><div class="pitch"></div>
+          <div class="floating-score score-a"><span>LIVE</span><b>2</b><small>72′</small></div>
+          <div class="floating-score score-b"><span>AWAY</span><b>1</b><small>Attacks 43</small></div>
+          <div class="ball-core"><span>⚽</span></div>
+          <div class="pulse-wave wave-one"></div><div class="pulse-wave wave-two"></div>
+          <div class="hero-stat"><strong id="liveCount">0</strong><span>matches live now</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ticker reveal"><div class="ticker-label"><i></i> BREAKING</div><div class="ticker-window"><div id="tickerTrack">Loading football updates…</div></div></section>
+
+    <section class="section reveal" id="scores">
+      <div class="section-head"><div><p class="eyebrow">MATCH CENTRE</p><h2>Scores in motion.</h2><p class="section-sub">Real scores from FotMob plus backup providers, refreshed automatically throughout the match.</p></div><div class="updated"><span class="radar"></span>Updated <span id="updatedAt">now</span></div></div>
+      <div class="score-toolbar"><div class="filters" id="filters"></div><div class="view-pill">AUTO REFRESH <b>ON</b></div></div>
+      <div id="notice" class="notice hidden"></div><div id="providerBar" class="provider-bar"></div>
+      <div id="matchGrid" class="match-grid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
+    </section>
+
+
+    <section class="section upcoming-section reveal" id="upcoming">
+      <div class="section-head"><div><p class="eyebrow">NEXT ON THE PITCH</p><h2>Coming up.</h2><p class="section-sub">Upcoming fixtures from the biggest competitions, arranged by day and powered by FotMob.</p></div><a class="fotmob-link magnetic" href="https://www.fotmob.com/" target="_blank" rel="noopener">OPEN FOTMOB <span>↗</span></a></div>
+      <div class="fixture-controls"><div id="fixtureDates" class="fixture-dates"></div><div class="fotmob-badge"><span>F</span> FOTMOB FIXTURES</div></div>
+      <div id="fixtureNotice" class="notice hidden"></div>
+      <div id="fixtureGrid" class="fixture-grid"><div class="skeleton fixture-skeleton"></div><div class="skeleton fixture-skeleton"></div></div>
+      <p class="source-note">Fixture information is requested from FotMob's website data feed through this project's server. FotMob does not advertise this as a public developer API, so the feed may change. Football Pulse is independent and not affiliated with FotMob.</p>
+    </section>
+
+    <section class="competitions reveal" id="competitions">
+      <div class="section-head"><div><p class="eyebrow">GLOBAL COVERAGE</p><h2>The biggest stages.</h2></div><p class="section-side">From domestic drama to nights under the Champions League lights.</p></div>
+      <div class="comp-grid">
+        <article><div class="comp-icon">🏆</div><span class="comp-no">01</span><b>FIFA World Cup</b><small>International</small></article>
+        <article><div class="comp-icon">⭐</div><span class="comp-no">02</span><b>Champions League</b><small>Europe</small></article>
+        <article><div class="comp-icon">🦁</div><span class="comp-no">03</span><b>Premier League</b><small>England</small></article>
+        <article><div class="comp-icon">🇪🇸</div><span class="comp-no">04</span><b>La Liga</b><small>Spain</small></article>
+        <article><div class="comp-icon">🇮🇹</div><span class="comp-no">05</span><b>Serie A</b><small>Italy</small></article>
+        <article><div class="comp-icon">🇩🇪</div><span class="comp-no">06</span><b>Bundesliga</b><small>Germany</small></article>
+      </div>
+    </section>
+
+    <section class="section news-section reveal" id="news">
+      <div class="section-head"><div><p class="eyebrow">BREAKING FOOTBALL NEWS</p><h2>The football wire.</h2><p class="section-sub">The newest stories from BBC Sport, The Guardian and ESPN, refreshed every three minutes.</p></div><div class="news-live"><i></i> LIVE NEWS WIRE</div></div><div id="newsSources" class="news-sources"></div>
+      <div id="newsGrid" class="news-grid"><div class="skeleton tall"></div><div class="skeleton tall"></div><div class="skeleton tall"></div></div>
+      <p class="source-note">News headlines are aggregated from publisher RSS feeds and always link to the original article. Scores use FotMob website data with optional backup feeds from football-data.org, TheSportsDB, API-Football and Sportmonks. Football Pulse is independent and not affiliated with those services.</p>
+    </section>
+  </main>
+
+  <footer><div><div class="brand"><span class="brand-mark"><span></span></span> FOOTBALL <b>PULSE</b></div><p>Every match. Every moment. One pulse.</p></div><div class="footer-right"><span>LIVE DATA</span><span>BREAKING NEWS</span><span>© 2026</span></div></footer>
+  <script src="app.js"></script>
+</body>
+</html>
