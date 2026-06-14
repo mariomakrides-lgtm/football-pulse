@@ -1,0 +1,9 @@
+{
+  "name": "football-pulse-live-scores",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Animated football scores website with live API support and BBC Sport headlines",
+  "main": "server.js",
+  "scripts": {"start": "node server.js"},
+  "engines": {"node": ">=18"}
+}
