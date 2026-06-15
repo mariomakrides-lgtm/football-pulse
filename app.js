@@ -42,6 +42,246 @@ document.addEventListener('pointermove',e=>{
   const r=card.getBoundingClientRect();
   card.style.setProperty('--mx',`${e.clientX-r.left}px`);
   card.style.setProperty('--my',`${e.clientY-r.top}px`);
+});const liveModal = document.getElementById("liveMatchModal");
+const liveModalContent = document.getElementById("liveMatchContent");
+const liveModalClose = document.getElementById("liveModalClose");
+const liveModalBackdrop = document.getElementById("liveModalBackdrop");
+
+let liveDetailsTimer = null;
+let activeMatchId = null;
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function numericValue(value) {
+  if (typeof value === "number") return value;
+
+  const number = Number.parseFloat(String(value || "").replace("%", ""));
+  return Number.isFinite(number) ? number : 0;
+}
+
+function statWidth(home, away) {
+  const homeValue = numericValue(home);
+  const awayValue = numericValue(away);
+  const total = homeValue + awayValue;
+
+  if (!total) return 50;
+  return Math.round((homeValue / total) * 100);
+}
+
+function eventIcon(event) {
+  const detail = `${event.type} ${event.detail}`.toLowerCase();
+
+  if (detail.includes("goal")) return "⚽";
+  if (detail.includes("yellow")) return "🟨";
+  if (detail.includes("red")) return "🟥";
+  if (detail.includes("subst")) return "🔄";
+  if (detail.includes("var")) return "📺";
+
+  return "•";
+}
+
+function renderLiveDetails(data) {
+  if (!data.fixture) {
+    liveModalContent.innerHTML = `
+      <div class="live-error">
+        Match information is not available yet.
+      </div>
+    `;
+    return;
+  }
+
+  const fixture = data.fixture;
+
+  const statisticsHtml = data.statistics
+    .map(stat => {
+      const width = statWidth(stat.home, stat.away);
+
+      return `
+        <div class="live-stat">
+          <div class="live-stat__values">
+            <strong>${escapeHtml(stat.home)}</strong>
+            <span>${escapeHtml(stat.name)}</span>
+            <strong>${escapeHtml(stat.away)}</strong>
+          </div>
+
+          <div class="live-stat__bar">
+            <span style="width:${width}%"></span>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  const eventsHtml = data.events.length
+    ? data.events
+        .slice()
+        .reverse()
+        .map(event => {
+          const minute = event.minute
+            ? `${event.minute}${event.extraMinute ? `+${event.extraMinute}` : ""}'`
+            : "";
+
+          return `
+            <div class="timeline-event">
+              <span class="timeline-event__minute">
+                ${escapeHtml(minute)}
+              </span>
+
+              <span class="timeline-event__icon">
+                ${eventIcon(event)}
+              </span>
+
+              <div>
+                <strong>${escapeHtml(event.player || event.team)}</strong>
+                <p>
+                  ${escapeHtml(event.detail || event.type)}
+                  ${event.assist ? ` · Assist: ${escapeHtml(event.assist)}` : ""}
+                </p>
+              </div>
+            </div>
+          `;
+        })
+        .join("")
+    : `<p class="live-empty">No match events have been reported yet.</p>`;
+
+  liveModalContent.innerHTML = `
+    <div class="live-scoreboard">
+      <div class="live-team">
+        ${
+          fixture.homeLogo
+            ? `<img src="${escapeHtml(fixture.homeLogo)}" alt="">`
+            : ""
+        }
+        <span>${escapeHtml(fixture.home)}</span>
+      </div>
+
+      <div class="live-scoreboard__centre">
+        <span class="live-minute">
+          ${escapeHtml(fixture.minute ? `${fixture.minute}'` : fixture.status)}
+        </span>
+
+        <strong>
+          ${escapeHtml(fixture.homeScore ?? 0)}
+          <span>–</span>
+          ${escapeHtml(fixture.awayScore ?? 0)}
+        </strong>
+      </div>
+
+      <div class="live-team">
+        ${
+          fixture.awayLogo
+            ? `<img src="${escapeHtml(fixture.awayLogo)}" alt="">`
+            : ""
+        }
+        <span>${escapeHtml(fixture.away)}</span>
+      </div>
+    </div>
+
+    <div class="live-meta">
+      ${fixture.venue ? `<span>📍 ${escapeHtml(fixture.venue)}</span>` : ""}
+      ${fixture.referee ? `<span>Referee: ${escapeHtml(fixture.referee)}</span>` : ""}
+      <span>Updated ${new Date(data.updatedAt).toLocaleTimeString()}</span>
+    </div>
+
+    <div class="live-tabs">
+      <section>
+        <h3>Live statistics</h3>
+        <div class="live-statistics">
+          ${statisticsHtml}
+        </div>
+      </section>
+
+      <section>
+        <h3>Match events</h3>
+        <div class="live-timeline">
+          ${eventsHtml}
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+async function loadLiveDetails(matchId) {
+  try {
+    const response = await fetch(
+      `/api/match-details?id=${encodeURIComponent(matchId)}`,
+      {
+        cache: "no-store"
+      }
+    );
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.error || "Live statistics could not be loaded.");
+    }
+
+    renderLiveDetails(data);
+  } catch (error) {
+    liveModalContent.innerHTML = `
+      <div class="live-error">
+        ${escapeHtml(error.message)}
+      </div>
+    `;
+  }
+}
+
+function openLiveMatch(matchId) {
+  if (!matchId.startsWith("af-")) {
+    alert("Detailed live statistics are not available from this match provider.");
+    return;
+  }
+
+  activeMatchId = matchId;
+  liveModal.hidden = false;
+  document.body.classList.add("modal-open");
+
+  liveModalContent.innerHTML = `
+    <div class="live-loading">Loading live statistics…</div>
+  `;
+
+  loadLiveDetails(activeMatchId);
+
+  clearInterval(liveDetailsTimer);
+
+  liveDetailsTimer = setInterval(() => {
+    if (activeMatchId) {
+      loadLiveDetails(activeMatchId);
+    }
+  }, 15000);
+}
+
+function closeLiveMatch() {
+  activeMatchId = null;
+  clearInterval(liveDetailsTimer);
+  liveDetailsTimer = null;
+
+  liveModal.hidden = true;
+  document.body.classList.remove("modal-open");
+}
+
+document.addEventListener("click", event => {
+  const card = event.target.closest("[data-live-match]");
+
+  if (!card) return;
+
+  openLiveMatch(card.dataset.matchId);
+});
+
+liveModalClose?.addEventListener("click", closeLiveMatch);
+liveModalBackdrop?.addEventListener("click", closeLiveMatch);
+
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && !liveModal.hidden) {
+    closeLiveMatch();
+  }
 });
 
 const originalRenderMatches=renderMatches;
