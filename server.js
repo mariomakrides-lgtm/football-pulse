@@ -154,8 +154,9 @@ function parseProviderJson(
   try {
     return JSON.parse(providerResponse.body);
   } catch {
-    throw new Error(
-      `${providerName} returned invalid data.`
+   throw new Error(
+  `${providerName} returned HTTP ${providerResponse.status}`
+);
     );
   }
 }
