@@ -82,4 +82,40 @@
   <footer><div><div class="brand"><span class="brand-mark"><span></span></span> FOOTBALL <b>PULSE</b></div><p>Every match. Every moment. One pulse.</p></div><div class="footer-right"><span>LIVE DATA</span><span>BREAKING NEWS</span><span>© 2026</span></div></footer>
   <script src="app.js"></script>
 </body>
-</html>
+</html><div class="live-modal" id="liveMatchModal" hidden>
+  <button
+    class="live-modal__backdrop"
+    id="liveModalBackdrop"
+    aria-label="Close match details"
+  ></button>
+
+  <section
+    class="live-modal__panel"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="liveMatchTitle"
+  >
+    <div class="live-modal__header">
+      <div>
+        <span class="live-pill">
+          <span class="live-dot"></span>
+          LIVE MATCH CENTRE
+        </span>
+
+        <h2 id="liveMatchTitle">Match details</h2>
+      </div>
+
+      <button
+        class="live-modal__close"
+        id="liveModalClose"
+        aria-label="Close match details"
+      >
+        ×
+      </button>
+    </div>
+
+    <div id="liveMatchContent">
+      <div class="live-loading">Loading live statistics…</div>
+    </div>
+  </section>
+</div>
