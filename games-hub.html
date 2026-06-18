@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050816">
+  <meta name="description" content="Premier League calculator, football predictions, head-to-head leagues and dream lineup builder.">
+  <title>Football Games Hub | Football Pulse</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/games-hub.css">
+</head>
+<body class="games-page">
+  <div class="games-glow glow-a"></div>
+  <div class="games-glow glow-b"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <img src="/logo.svg" alt="Football Pulse logo" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="/">Live</a>
+      <a href="/results.html">Results</a>
+      <a href="/predictions.html">World Cup Predictor</a>
+      <a href="/world-cup-live.html">World Cup Live</a>
+      <a class="active-link" href="/games-hub.html">Games Hub</a>
+    </nav>
+
+    <button id="menuButton" class="menu-button" aria-label="Open menu">☰</button>
+  </header>
+
+  <nav id="mobileMenu" class="mobile-menu" hidden>
+    <a href="/">Live</a>
+    <a href="/results.html">Results</a>
+    <a href="/predictions.html">World Cup Predictor</a>
+    <a href="/world-cup-live.html">World Cup Live</a>
+    <a href="/games-hub.html">Games Hub</a>
+  </nav>
+
+  <main>
+    <section class="games-hero">
+      <div>
+        <div class="eyebrow"><i></i> FOOTBALL PULSE GAMES HUB</div>
+        <h1>Predict it. Build it. <span>Win it.</span></h1>
+        <p>Create your Premier League table, challenge a friend across a season, predict scores and tournament winners, then build your dream XI.</p>
+      </div>
+
+      <div class="games-visual" aria-hidden="true">
+        <div class="orbit orbit-a"></div>
+        <div class="orbit orbit-b"></div>
+        <div class="games-ball">⚽</div>
+        <div class="float-label label-score">5 PTS EXACT SCORE</div>
+        <div class="float-label label-trophy">15 PTS TOURNAMENT</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="hub-tabs" role="tablist">
+        <button class="hub-tab active" data-panel="calculatorPanel">PL Table Calculator</button>
+        <button class="hub-tab" data-panel="predictionsPanel">Score Predictions</button>
+        <button class="hub-tab" data-panel="headToHeadPanel">Head-to-Head</button>
+        <button class="hub-tab" data-panel="lineupPanel">Dream Lineup</button>
+      </div>
+
+      <section id="calculatorPanel" class="hub-panel">
+        <div class="section-header">
+          <div>
+            <small class="kicker">2026/27 SEASON</small>
+            <h2>Premier League table calculator.</h2>
+          </div>
+          <div class="inline-actions">
+            <button id="saveTable" class="button button-primary button-small">Save</button>
+            <button id="resetTable" class="button button-ghost button-small">Reset</button>
+          </div>
+        </div>
+
+        <div class="info-strip">
+          Club names are editable, so promoted and relegated teams can be changed once the final line-up is confirmed.
+        </div>
+
+        <div class="zone-key">
+          <span class="zone-chip ucl-chip">Champions League</span>
+          <span class="zone-chip europa-chip">Europa League</span>
+          <span class="zone-chip conference-chip">Conference League</span>
+          <span class="zone-chip drop-chip">Relegation</span>
+        </div>
+
+        <div class="table-scroll">
+          <table class="calculator-table">
+            <thead>
+              <tr>
+                <th>Pos</th>
+                <th class="club-heading">Club</th>
+                <th>P</th>
+                <th>W</th>
+                <th>D</th>
+                <th>L</th>
+                <th>GF</th>
+                <th>GA</th>
+                <th>GD</th>
+                <th>Pts</th>
+              </tr>
+            </thead>
+            <tbody id="calculatorBody"></tbody>
+          </table>
+        </div>
+
+        <div class="summary-grid">
+          <article><span>Champion</span><strong id="championSummary">Not decided</strong></article>
+          <article><span>Top-four line</span><strong id="topFourSummary">0 pts</strong></article>
+          <article><span>Safety line</span><strong id="safetySummary">0 pts</strong></article>
+          <article><span>Relegated</span><strong id="relegatedSummary">Not decided</strong></article>
+        </div>
+      </section>
+
+      <section id="predictionsPanel" class="hub-panel" hidden>
+        <div class="section-header">
+          <div>
+            <small class="kicker">MATCHDAY CHALLENGE</small>
+            <h2>Score predictions.</h2>
+          </div>
+          <button id="addPredictionMatch" class="button button-primary button-small">Add match</button>
+        </div>
+
+        <div class="scoring-rules">
+          <article><strong>5</strong><span>Exact score</span></article>
+          <article><strong>3</strong><span>Correct outcome</span></article>
+          <article><strong>2</strong><span>One exact team score</span></article>
+          <article><strong>1</strong><span>No pick + underdog wins</span></article>
+          <article><strong>15</strong><span>Correct tournament winner</span></article>
+        </div>
+
+        <div class="info-strip">
+          Choose the pre-match favourite. If the other team wins, that counts as an unexpected winner for the one-point no-prediction bonus.
+        </div>
+
+        <div id="predictionMatches" class="prediction-match-list"></div>
+
+        <div class="section-header compact-header">
+          <div>
+            <small class="kicker">BIG PICKS</small>
+            <h3>Tournament outcomes.</h3>
+          </div>
+          <button id="addTournamentPick" class="button button-ghost button-small">Add tournament</button>
+        </div>
+
+        <div id="tournamentPicks" class="tournament-picks"></div>
+      </section>
+
+      <section id="headToHeadPanel" class="hub-panel" hidden>
+        <div class="section-header">
+          <div>
+            <small class="kicker">TWO-PLAYER SEASON</small>
+            <h2>Head-to-head championship.</h2>
+          </div>
+          <button id="resetH2H" class="button button-ghost button-small">Reset season</button>
+        </div>
+
+        <div class="player-name-grid">
+          <label>
+            <span>Player one</span>
+            <input id="playerOneName" type="text" value="Player 1">
+          </label>
+          <label>
+            <span>Player two</span>
+            <input id="playerTwoName" type="text" value="Player 2">
+          </label>
+        </div>
+
+        <div class="h2h-scoreboard">
+          <article>
+            <span id="playerOneLabel">Player 1</span>
+            <strong id="playerOnePoints">0</strong>
+            <small>points</small>
+          </article>
+          <div class="versus">VS</div>
+          <article>
+            <span id="playerTwoLabel">Player 2</span>
+            <strong id="playerTwoPoints">0</strong>
+            <small>points</small>
+          </article>
+        </div>
+
+        <div class="h2h-entry">
+          <label>
+            <span>Round name</span>
+            <input id="roundName" type="text" placeholder="Matchweek 1">
+          </label>
+          <label>
+            <span>Player 1 points</span>
+            <input id="roundP1" type="number" min="0" value="0">
+          </label>
+          <label>
+            <span>Player 2 points</span>
+            <input id="roundP2" type="number" min="0" value="0">
+          </label>
+          <button id="addH2HRound" class="button button-primary">Add round</button>
+        </div>
+
+        <div class="table-scroll">
+          <table class="h2h-table">
+            <thead>
+              <tr>
+                <th>Round</th>
+                <th id="h2hP1Head">Player 1</th>
+                <th id="h2hP2Head">Player 2</th>
+                <th>Winner</th>
+              </tr>
+            </thead>
+            <tbody id="h2hRounds"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="lineupPanel" class="hub-panel" hidden>
+        <div class="section-header">
+          <div>
+            <small class="kicker">BUILD YOUR XI</small>
+            <h2>Dream lineup builder.</h2>
+          </div>
+          <div class="inline-actions">
+            <button id="saveLineup" class="button button-primary button-small">Save XI</button>
+            <button id="resetLineup" class="button button-ghost button-small">Reset</button>
+          </div>
+        </div>
+
+        <div class="lineup-controls">
+          <label>
+            <span>Team name</span>
+            <input id="lineupName" type="text" value="My Dream XI">
+          </label>
+          <label>
+            <span>Formation</span>
+            <select id="formationSelect">
+              <option value="4-3-3">4-3-3</option>
+              <option value="4-2-3-1">4-2-3-1</option>
+              <option value="4-4-2">4-4-2</option>
+              <option value="3-5-2">3-5-2</option>
+              <option value="3-4-3">3-4-3</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="lineup-layout">
+          <div class="football-pitch">
+            <div class="pitch-centre-line"></div>
+            <div class="pitch-centre-circle"></div>
+            <div class="pitch-box top-box"></div>
+            <div class="pitch-box bottom-box"></div>
+            <div id="pitchPlayers" class="pitch-players"></div>
+          </div>
+
+          <aside class="lineup-editor">
+            <h3>Player editor</h3>
+            <p>Select a position on the pitch, then enter a player.</p>
+
+            <label>
+              <span>Selected position</span>
+              <input id="selectedPosition" type="text" readonly value="GK">
+            </label>
+
+            <label>
+              <span>Player name</span>
+              <input id="playerNameInput" type="text" placeholder="Player name">
+            </label>
+
+            <label>
+              <span>Club or country</span>
+              <input id="playerTeamInput" type="text" placeholder="Club or country">
+            </label>
+
+            <button id="applyPlayer" class="button button-primary">Add to lineup</button>
+          </aside>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand">
+      <img src="/logo.svg" alt="" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </div>
+    <p>Games are stored locally on this device.</p>
+  </footer>
+
+  <script src="/games-hub.js" defer></script>
+</body>
+</html>

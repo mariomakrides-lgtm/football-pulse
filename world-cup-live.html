@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050816">
+  <title>World Cup Live Tables & Bracket | Football Pulse</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/world-cup-live.css">
+</head>
+<body class="wc-live-page">
+  <div class="wc-glow wc-glow-one"></div>
+  <div class="wc-glow wc-glow-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <img src="/logo.svg" alt="Football Pulse logo" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="/">Live</a>
+      <a href="/results.html">Results</a>
+      <a href="/predictions.html">Predict</a>
+      <a class="active-link" href="/world-cup-live.html">World Cup Live</a>
+    </nav>
+
+    <button id="menuButton" class="menu-button" aria-label="Open menu">☰</button>
+  </header>
+
+  <nav id="mobileMenu" class="mobile-menu" hidden>
+    <a href="/">Live</a>
+    <a href="/results.html">Results</a>
+    <a href="/predictions.html">Predict</a>
+    <a href="/world-cup-live.html">World Cup Live</a>
+    <a href="/games-hub.html">Games Hub</a>
+      <a href="/games-hub.html">Games Hub</a>
+  </nav>
+
+  <main>
+    <section class="wc-hero">
+      <div>
+        <div class="eyebrow"><i></i> WORLD CUP 2026 LIVE CENTRE</div>
+        <h1>Groups and bracket <span>updated live.</span></h1>
+        <p>Track all 12 group tables, qualified teams and every knockout round from the Round of 32 to the final.</p>
+
+        <div class="wc-actions">
+          <button id="refreshWorldCup" class="button button-primary">Refresh now</button>
+          <span id="lastUpdated" class="last-updated">Not updated yet</span>
+        </div>
+      </div>
+
+      <div class="wc-visual" aria-hidden="true">
+        <div class="wc-orbit wc-orbit-one"></div>
+        <div class="wc-orbit wc-orbit-two"></div>
+        <div class="wc-trophy">🏆</div>
+        <div class="wc-float-card wc-card-one">12 GROUPS</div>
+        <div class="wc-float-card wc-card-two">ROUND OF 32 → FINAL</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wc-view-tabs">
+        <button class="wc-view-button active" data-view="groupsView">Group tables</button>
+        <button class="wc-view-button" data-view="bracketView">Knockout bracket</button>
+      </div>
+
+      <div id="worldCupStatus" class="status-box">Loading World Cup data…</div>
+
+      <div id="groupsView" class="wc-view">
+        <div id="groupsGrid" class="groups-grid-live"></div>
+      </div>
+
+      <div id="bracketView" class="wc-view" hidden>
+        <div class="bracket-information">
+          The bracket fills automatically when knockout fixtures or results become available.
+        </div>
+
+        <div class="bracket-scroll">
+          <div id="worldBracket" class="world-bracket"></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand">
+      <img src="/logo.svg" alt="" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </div>
+    <p>Live data depends on your score provider’s World Cup coverage.</p>
+  </footer>
+
+  <script src="/world-cup-live.js" defer></script>
+</body>
+</html>

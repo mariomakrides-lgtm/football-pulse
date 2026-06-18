@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050816">
+  <title>Full World Cup Predictor | Football Pulse</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/predictions.css">
+</head>
+<body class="predictor-page">
+  <div class="predictor-glow glow-one"></div>
+  <div class="predictor-glow glow-two"></div>
+
+  <header class="site-header">
+    <a class="brand" href="/">
+      <img src="/logo.svg" alt="Football Pulse logo" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </a>
+
+    <nav class="desktop-nav">
+      <a href="/">Live</a>
+      <a href="/#fixtures">Fixtures</a>
+      <a href="/results.html">Results</a>
+      <a class="active-link" href="/predictions.html">Predict</a>
+      <a href="/#news">News</a>
+    </nav>
+
+    <button id="menuButton" class="menu-button" aria-label="Open menu">☰</button>
+  </header>
+
+  <nav id="mobileMenu" class="mobile-menu" hidden>
+    <a href="/">Live</a>
+    <a href="/#fixtures">Fixtures</a>
+    <a href="/results.html">Results</a>
+    <a href="/predictions.html">Predict</a>
+    <a href="/world-cup-live.html">World Cup Live</a>
+    <a href="/games-hub.html">Games Hub</a>
+      <a href="/games-hub.html">Games Hub</a>
+      <a href="/world-cup-live.html">World Cup Live</a>
+    <a href="/#news">News</a>
+  </nav>
+
+  <main>
+    <section class="predictor-hero">
+      <div>
+        <div class="eyebrow"><i></i> COMPLETE TOURNAMENT SIMULATOR</div>
+        <h1>Predict every <span>World Cup step.</span></h1>
+        <p>Rank all 12 groups, choose the best third-place teams, then play through every knockout round until your champion lifts the trophy.</p>
+
+        <div class="predictor-actions">
+          <button id="savePrediction" class="button button-primary">Save prediction</button>
+          <button id="resetPrediction" class="button button-ghost">Reset tournament</button>
+        </div>
+
+        <p id="saveMessage" class="save-message"></p>
+      </div>
+
+      <div class="trophy-stage" aria-hidden="true">
+        <div class="orbit orbit-one"></div>
+        <div class="orbit orbit-two"></div>
+        <div class="trophy">🏆</div>
+        <div class="floating-label label-one">48 TEAMS</div>
+        <div class="floating-label label-two">104 MATCHES</div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <small class="kicker">STAGE 1</small>
+          <h2>Group predictions.</h2>
+        </div>
+      </div>
+
+      <div class="instruction-box">
+        Put the teams in finishing order from 1st to 4th. The top two from every group qualify automatically.
+      </div>
+
+      <div id="groupsGrid" class="groups-grid"></div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <small class="kicker">STAGE 2</small>
+          <h2>Best third-place teams.</h2>
+        </div>
+      </div>
+
+      <div class="instruction-box">
+        Select exactly eight third-place teams to join the knockout stage.
+      </div>
+
+      <div id="thirdPlaceGrid" class="third-place-grid"></div>
+      <div class="selection-counter">
+        Selected: <strong id="thirdPlaceCount">0</strong>/8
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <small class="kicker">STAGE 3</small>
+          <h2>Knockout bracket.</h2>
+        </div>
+      </div>
+
+      <div id="bracketStatus" class="status-box">
+        Complete the groups and choose eight third-place teams to unlock the bracket.
+      </div>
+
+      <div class="bracket-scroll">
+        <div id="knockoutBracket" class="knockout-bracket"></div>
+      </div>
+    </section>
+
+    <section class="section champion-section">
+      <div class="champion-card">
+        <small>YOUR 2026 WORLD CHAMPION</small>
+        <div class="champion-trophy">🏆</div>
+        <h2 id="championName">Not decided yet</h2>
+        <p id="finalSummary">Complete the bracket to crown your winner.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="brand">
+      <img src="/logo.svg" alt="" class="brand-logo">
+      <span>FOOTBALL <b>PULSE</b></span>
+    </div>
+    <p>Your prediction is saved privately on this device.</p>
+  </footer>
+
+  <script src="/predictions.js" defer></script>
+</body>
+</html>
