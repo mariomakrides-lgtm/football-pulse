@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://footballpulse.co.uk/sitemap.xml
